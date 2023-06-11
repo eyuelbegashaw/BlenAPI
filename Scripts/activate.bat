@@ -1,4 +1,4 @@
-@set "VIRTUAL_ENV=C:\Users\Jo\Desktop\api"
+@set "VIRTUAL_ENV=C:\Users\Jo\Desktop\prooo\blenAPI"
 
 @if defined _OLD_VIRTUAL_PROMPT (
     @set "PROMPT=%_OLD_VIRTUAL_PROMPT%"

@@ -31,7 +31,7 @@ export-env {
     }
 
     let is_windows = ($nu.os-info.name | str downcase) == 'windows'
-    let virtual_env = 'C:\Users\Jo\Desktop\api'
+    let virtual_env = 'C:\Users\Jo\Desktop\prooo\blenAPI'
     let bin = 'Scripts'
     let path_sep = (char esep)
     let path_name = (if $is_windows {
