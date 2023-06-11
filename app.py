@@ -6,6 +6,12 @@ import shutil
 import os 
 
 app = Flask(__name__)
+
+@app.route("/")
+def check():
+    return jsonify({"message":"hello world"})
+
+    
 @app.route("/cardRecognition")
 def hello_world():
     if 'image' not in request.files:
