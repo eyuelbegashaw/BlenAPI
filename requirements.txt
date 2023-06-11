@@ -8,7 +8,7 @@ cycler==0.11.0
 easyocr==1.7.0
 filelock==3.12.1
 Flask==2.2.2
-fonttools==4.39.4
+fonttools==4.38.0
 idna==3.4
 imageio==2.31.0
 itsdangerous==2.1.2
