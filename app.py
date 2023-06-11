@@ -11,7 +11,7 @@ app = Flask(__name__)
 def check():
     return jsonify({"message":"hello world"})
 
-    
+
 @app.route("/cardRecognition")
 def hello_world():
     if 'image' not in request.files:
@@ -21,7 +21,7 @@ def hello_world():
     if image.filename == '':
         return "Empty image filename", 400
 
-    save_path = 'test/images/' + image.filename
+    save_path = './test/images/' + image.filename
     image.save(save_path)
     print(image.filename)
   
