@@ -1,11 +1,12 @@
-from flask import Flask , jsonify, request
-import cv2
+from ultralytics import YOLO
+import numpy as np
+from PIL import Image
 import easyocr
-import subprocess
-import shutil
-import os 
+import matplotlib.pyplot as plt
+
 
 app = Flask(__name__)
+model = YOLO("best.pt")
 
 @app.route("/")
 def check():
@@ -21,34 +22,23 @@ def hello_world():
     if image.filename == '':
         return "Empty image filename", 400
 
-    save_path = './test/images/' + image.filename
-    image.save(save_path)
-    print(image.filename)
-  
-   
-    command = [
-    'yolo',
-    'task=detect',
-    'mode=predict',
-    'model=best.pt',
-    'conf=0.25',
-    'source=test/images',
-    'save_crop'
-     ]
-    subprocess.run(command)
+    #prediction using model
+    results = model.predict(image)
 
-    cropedImage = cv2.imread(f"./runs/detect/predict/crops/Card/{image.filename}")
+    #coordinates of the card
+    x = results[0].boxes.data[0]
+    x1 = x[0].item()
+    y1 = x[1].item()
+    x2 = x[2].item()
+    y2 = x[3].item()
+
+    #crop the detected image
+    cropped_image = image.crop((x1, y1, x2, y2))
+
+    #Perform ocr on the cropped image
     reader = easyocr.Reader(['en'] , gpu=False)
-    result = reader.readtext(cropedImage, allowlist ='0123456789' ,detail = 0)
+    arrayImage = np.asarray(cropped_image)
+    result = reader.readtext(arrayImage, allowlist ='0123456789' ,detail = 0)
     cleanedNumbers = "".join(result)
-    print(image.filename)
-    test_path = f'./test/images/{image.filename}'  
-    run_path = './runs'
-    try:
-        os.remove(test_path)
-        shutil.rmtree(run_path)
-        print("Folder deleted successfully.")
-    except OSError as e:
-        print(f"Error: {e.strerror}")
 
-    return jsonify({ "message" :  cleanedNumbers})
+    return ({"cardNumbers" : cleanedNumbers}) 
