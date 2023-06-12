@@ -44,11 +44,20 @@ def hello_world():
         #crop the detected image
         cropped_image = image.crop((x1, y1, x2, y2))
 
+        print("success1")
+
         #Perform ocr on the cropped image
         reader = easyocr.Reader(['en'])
+
+        print("success2")
         arrayImage = np.asarray(cropped_image)
+        print("success3")
         result = reader.readtext(arrayImage, allowlist ='0123456789' ,detail = 0)
+        print("success4")
+        print(result)
         cleanedNumbers = "".join(result)
+        print("success5")
+        print(cleanedNumbers)
 
         return jsonify({"cardNumbers" : cleanedNumbers}) 
     except Exception as error:
