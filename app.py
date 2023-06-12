@@ -3,6 +3,7 @@ import numpy as np
 from PIL import Image
 import easyocr
 import matplotlib.pyplot as plt
+from flask import Flask ,jsonify , request
 
 
 app = Flask(__name__)
@@ -41,4 +42,4 @@ def hello_world():
     result = reader.readtext(arrayImage, allowlist ='0123456789' ,detail = 0)
     cleanedNumbers = "".join(result)
 
-    return ({"cardNumbers" : cleanedNumbers}) 
+    return jsonify({"cardNumbers" : cleanedNumbers}) 
