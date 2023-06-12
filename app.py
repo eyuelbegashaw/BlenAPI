@@ -8,15 +8,12 @@ from flask_cors import CORS
 
 
 app = Flask(__name__)
-model = YOLO("best.pt")
-
-
-app = Flask(__name__)
 CORS(app) 
 
 @app.route("/hello" , methods=['POST'])
 def hello_world():
     try: 
+        model = YOLO("best.pt")
         print("welcome")
         if 'image' not in request.files:
             return "No image found in request", 400
@@ -27,10 +24,11 @@ def hello_world():
             return "Empty image filename", 400
 
         image = Image.open(image)
+        print("pillow load success")
 
         #prediction using model
         results = model.predict(image)
-
+        print(result)
         #coordinates of the card
         x = results[0].boxes.data[0]
         x1 = x[0].item()
