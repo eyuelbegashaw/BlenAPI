@@ -14,7 +14,7 @@ model = YOLO("best.pt")
 app = Flask(__name__)
 CORS(app) 
 
-@app.route("/" ,  methods = ['POST'])
+@app.route("/")
 def hello_world():
     try:    
         if 'image' not in request.files:
