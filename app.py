@@ -14,7 +14,7 @@ model = YOLO("best.pt")
 app = Flask(__name__)
 CORS(app) 
 
-@app.route("/" , methods=['POST'])
+@app.route("/hello" , methods=['POST'])
 def hello_world():
     try: 
         print("welcome")
@@ -55,7 +55,7 @@ def hello_world():
         print("An exception occurred:", error) 
 
 
-@app.route("/hello")
+@app.route("/")
 def check():
     return jsonify({"message":"hello world"})
 
