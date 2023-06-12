@@ -14,13 +14,15 @@ model = YOLO("best.pt")
 app = Flask(__name__)
 CORS(app) 
 
-@app.route("/")
+@app.route("/" , methods=['POST'])
 def hello_world():
-    try:    
+    try: 
+        print("welcome")
         if 'image' not in request.files:
             return "No image found in request", 400
         
         image = request.files['image']
+        print("Image received successfully")
         if image.filename == '':
             return "Empty image filename", 400
 
