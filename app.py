@@ -9,21 +9,17 @@ from flask import Flask ,jsonify , request
 app = Flask(__name__)
 model = YOLO("best.pt")
 
-@app.route("/")
-def check():
-    return jsonify({"message":"hello world"})
-
-
-@app.route("/cardRecognition")
+@app.route("/" ,  methods = ['POST'])
 def hello_world():
-    try:
+    try:    
         if 'image' not in request.files:
             return "No image found in request", 400
         
         image = request.files['image']
         if image.filename == '':
             return "Empty image filename", 400
-        print("IMAGE RECEIVED")
+
+        image = Image.open(image)
 
         #prediction using model
         results = model.predict(image)
@@ -36,7 +32,7 @@ def hello_world():
         y2 = x[3].item()
 
         print("coordinates received")
-        print(result)
+
 
         #crop the detected image
         cropped_image = image.crop((x1, y1, x2, y2))
@@ -49,6 +45,11 @@ def hello_world():
 
         return jsonify({"cardNumbers" : cleanedNumbers}) 
     except Exception as error:
-        print("An exception occurred:", error) # An exception occurred: division by zero
+        print("An exception occurred:", error) 
+
+
+@app.route("/hello")
+def check():
+    return jsonify({"message":"hello world"})
 
     
