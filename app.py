@@ -19,6 +19,7 @@ def hello_world():
             return "No image found in request", 400
         
         image = request.files['image']
+        original_image = request.files['image']
         print("Image received successfully")
         if image.filename == '':
             return "Empty image filename", 400
@@ -40,7 +41,7 @@ def hello_world():
 
 
         #crop the detected image
-        cropped_image = image.crop((x1, y1, x2, y2))
+        cropped_image = original_image.crop((x1, y1, x2, y2))
 
         #Perform ocr on the cropped image
         reader = easyocr.Reader(['en'] , gpu=False)
