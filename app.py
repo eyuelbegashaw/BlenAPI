@@ -28,7 +28,7 @@ def hello_world():
 
         #prediction using model
         results = model.predict(image)
-        print(result)
+        print(results)
         #coordinates of the card
         x = results[0].boxes.data[0]
         x1 = x[0].item()
