@@ -4,10 +4,15 @@ from PIL import Image
 import easyocr
 import matplotlib.pyplot as plt
 from flask import Flask ,jsonify , request
+from flask_cors import CORS
 
 
 app = Flask(__name__)
 model = YOLO("best.pt")
+
+
+app = Flask(__name__)
+CORS(app) 
 
 @app.route("/" ,  methods = ['POST'])
 def hello_world():
