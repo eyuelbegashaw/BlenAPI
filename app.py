@@ -19,7 +19,7 @@ def hello_world():
             return "No image found in request", 400
         
         image = request.files['image']
-        original_image = request.files['image']
+        original_image = image
         print("Image received successfully")
         if image.filename == '':
             return "Empty image filename", 400
@@ -38,13 +38,14 @@ def hello_world():
         y2 = x[3].item()
 
         print("coordinates received")
+        print(x1)
 
 
         #crop the detected image
-        cropped_image = original_image.crop((x1, y1, x2, y2))
+        cropped_image = image.crop((x1, y1, x2, y2))
 
         #Perform ocr on the cropped image
-        reader = easyocr.Reader(['en'] , gpu=False)
+        reader = easyocr.Reader(['en'])
         arrayImage = np.asarray(cropped_image)
         result = reader.readtext(arrayImage, allowlist ='0123456789' ,detail = 0)
         cleanedNumbers = "".join(result)
