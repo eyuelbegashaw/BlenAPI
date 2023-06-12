@@ -3,7 +3,7 @@ import numpy as np
 from PIL import Image
 import easyocr
 import matplotlib.pyplot as plt
-from flask import Flask ,jsonify , request
+from flask import Flask ,jsonify , request , send_file
 from flask_cors import CORS
 
 
@@ -44,22 +44,10 @@ def hello_world():
         #crop the detected image
         cropped_image = image.crop((x1, y1, x2, y2))
 
-        print("success1")
-
-        #Perform ocr on the cropped image
-        reader = easyocr.Reader(['en'])
-
-        print("success2")
-        arrayImage = np.asarray(cropped_image)
-        print("success3")
-        result = reader.readtext(arrayImage, allowlist ='0123456789' ,detail = 0)
-        print("success4")
-        print(result)
-        cleanedNumbers = "".join(result)
-        print("success5")
-        print(cleanedNumbers)
-
-        return jsonify({"cardNumbers" : cleanedNumbers}) 
+        cropped_image.save('cropped_image.jpg')
+    
+        # Return the cropped image as a response
+        return send_file('cropped_image.jpg', mimetype='image/jpeg')
     except Exception as error:
         print("An exception occurred:", error) 
 
