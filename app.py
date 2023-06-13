@@ -5,7 +5,9 @@ import easyocr
 import matplotlib.pyplot as plt
 from flask import Flask ,jsonify , request , send_file
 from flask_cors import CORS
-
+import base64
+import io
+import base64
 
 app = Flask(__name__)
 CORS(app) 
@@ -55,5 +57,9 @@ def hello_world():
 @app.route("/")
 def check():
     return jsonify({"message":"hello world"})
+
+@app.route("/boom")
+def imageReturn():
+  return send_file('cropped_image.jpg', mimetype='image/jpeg')
 
     
