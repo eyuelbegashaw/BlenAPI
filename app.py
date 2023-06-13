@@ -60,6 +60,6 @@ def check():
 
 @app.route("/boom")
 def imageReturn():
-  return send_file('cropped_image.jpg', mimetype='image/jpeg')
+    return send_file('cropped_image.jpg', mimetype='image/jpeg')
 
     
